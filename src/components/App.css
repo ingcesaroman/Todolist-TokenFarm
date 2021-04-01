@@ -1,1 +1,9 @@
 /* Styles go here */
+
+.nav__account{
+    color: white;
+}
+#account {
+    color:white;
+    font-size: 12px;
+}
