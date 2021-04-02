@@ -7,6 +7,7 @@ Bajo Licencia Creative Commons (CC)
 
 <iframe width="602" height="339" src="https://www.youtube.com/embed/rzvk2kdjr2I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+
 Pueden ver la construcción de la aplicación en el video que se muestra arriba. Se da una guía paso a paso en el tutorial. Antes de que se inicie con la construcción de la app, seria bueno conocer como es que trabaja una aplicación en blockchain.
 
 ## Introducción
@@ -85,3 +86,38 @@ Lo guiaré a través de la configuración de la aplicación de escritorio en est
 
 
 
+## Correr la aplicacion
+
+Confirmar que se tenga instalado NodeJS y Truffle 
+
+    $ node -v
+    $ npm install -g truffle@5.0.2
+
+
+Descargar el resto de las dependencias con:
+
+    $ npm install
+
+Para compilar nuestro primer contrato inteligente agregamos:
+
+    $ truffle compile
+
+Para iniciar la migracion de datos colocamos:
+
+    $ truffle migrate
+
+En ocaciones necesitaremos reiniciar la migracion para empezar de nuevo con:
+
+    $ truffle migrate --restart
+
+Y probar nuestro codigo desde la consola con:
+
+    $ truffle test
+
+Por ultimo para ver el resultado de nuestra app, tendremos que abrirlo desde una segunda terminal y ejecutar al siguiente linea para inciar nuestro servidor, para abrir nuestra aplicacion en un localhost.
+
+    $ npm run start
+
+Para probar que nuestra aplicacion funciona y agregar DApp tokens a los inversionistas, lo podemos simular desde la consola con:
+
+    truffle exec scripts/issueTokens.js
