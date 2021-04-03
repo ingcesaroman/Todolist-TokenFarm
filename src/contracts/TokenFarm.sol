@@ -4,8 +4,7 @@ import "./DappToken.sol";
 import "./DaiToken.sol";
 
 contract TokenFarm {
-    //All code goes here..
-    string public name = "Dapp Token Farm"; //crea una variable dentro del smart contrat que nos permita guardar 
+    string public name = "Dapp Token Farm";
     address public owner;
     DappToken public dappToken;
     DaiToken public daiToken;
@@ -21,9 +20,12 @@ contract TokenFarm {
         owner = msg.sender;
     }
 
+    function stakeTokens(uint _amount) public {
+        // Require amount greater than 0
         require(_amount > 0, "amount cannot be 0");
 
         // Trasnfer Mock Dai tokens to this contract for staking
+        daiToken.transferFrom(msg.sender, address(this), _amount);
 
         // Update staking balance
         stakingBalance[msg.sender] = stakingBalance[msg.sender] + _amount;
@@ -38,6 +40,10 @@ contract TokenFarm {
         hasStaked[msg.sender] = true;
     }
 
+    // Unstaking Tokens (Withdraw)
+    function unstakeTokens() public {
+        // Fetch staking balance
+        uint balance = stakingBalance[msg.sender];
 
         // Require amount greater than 0
         require(balance > 0, "staking balance cannot be 0");
@@ -46,30 +52,24 @@ contract TokenFarm {
         daiToken.transfer(msg.sender, balance);
 
         // Reset staking balance
-        // Transfere Mock Dai tokens to this contract fro staking
-        daiToken.transfer(msg.sender, balance);
-
-        // Rest staking balance
         stakingBalance[msg.sender] = 0;
 
         // Update staking status
         isStaking[msg.sender] = false;
     }
 
-//3. Issuing Tokens
+    // Issuing Tokens
     function issueTokens() public {
-        //only owner can call this funstion
+        // Only owner can call this function
         require(msg.sender == owner, "caller must be the owner");
 
-        //Issue tokens to all stakers
-        for(uint i=0;i<stakers.length;i++){ 
+        // Issue tokens to all stakers
+        for (uint i=0; i<stakers.length; i++) {
             address recipient = stakers[i];
             uint balance = stakingBalance[recipient];
-            if(balance > 0){
+            if(balance > 0) {
                 dappToken.transfer(recipient, balance);
             }
         }
     }
-    
-
 }
